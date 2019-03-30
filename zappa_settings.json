@@ -1,10 +1,10 @@
 {
     "dev": {
-       "project_name": "ask-crowd",
+       "project_name": "askcrowd",
        "keep_warm": false,
        "debug": true,
        "log_level": "DEBUG",
-       "s3_bucket": "ask-crowd",
+       "s3_bucket": "askcrowd",
        "app_function": "app.webapp",
        "http_methods": ["GET","POST"],
        "parameter_depth": 1,

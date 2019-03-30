@@ -1,8 +1,8 @@
 from flask import redirect, url_for, request, session
 from werkzeug.security import check_password_hash
+from app import webapp
 
 from app.db import *
-
 
 @webapp.route('/login', methods=['POST'])
 def login():

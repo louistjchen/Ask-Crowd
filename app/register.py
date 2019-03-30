@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, request, session
 from werkzeug.security import generate_password_hash
-
+from app import webapp
 from app.db import *
 
 @webapp.route('/register', methods=['GET'])
@@ -13,6 +13,12 @@ def register():
     username = request.form.get('username', "")
     password = request.form.get('password', "")
     confirm_password = request.form.get('confirm_password', "")
+
+    # to be modified
+    # sex = request.form.get('sex', "")
+    # age = request.form.get('age', "")
+    # occupation = request.form.get('occupation', "")
+
     session.pop('ret_msg', None)
 
     # empty input check

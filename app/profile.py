@@ -1,4 +1,5 @@
 from flask import render_template, redirect, url_for, request, session
+from app import webapp
 from app.db import *
 
 @webapp.route('/logout', methods=['GET'])
