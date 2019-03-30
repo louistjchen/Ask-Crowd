@@ -25,6 +25,17 @@ def db_read(table, key):
         item = None
     return item
 
+def db_scan(table, fe):
+
+    db = db_get()
+    db_table = db.Table(table)
+    if fe:
+        response = db_table.scan(FilterExpression=fe)
+    else:
+        response = db_table.scan()
+    return response['Items']
+
+
 # def s3_get():
 #
 #     s3 = boto3.client("s3")

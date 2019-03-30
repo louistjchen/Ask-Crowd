@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <title>AskCrowd - Profile</title>
+    <title>AskCrowd - Ask</title>
 
 </head>
 
@@ -47,37 +47,35 @@
 <div class="container">
     <h1 style="color:black;display: inline-block;">Good day, {{ username if username != None }}!</h1>
 
+    <form action="{{ url_for('ask') }}" method="post" class="form-signin">
+        <div class="alert alert-danger" role="alert"
+             style="visibility: {{ hidden }}">{{ ret_msg if ret_msg != None }}</div>
+        <h1 class="h3 mb-3 font-weight-normal" >Create a new poll</h1>
+        <br>
+        <input type="text" placeholder="Question" name="question" value="{{ question if question  != None }}"
+               class="form-control"><br>
 
-    <div style="visibility: {{ hidden }}" class="alert alert-success"
-         role="alert">{{ ret_msg if ret_msg != None }}</div>
+        <input type="text" placeholder="Answer 1" name="answer1" value="{{ answer1 if answer1  != None }}"
+               class="form-control"><br>
+        <input type="text" placeholder="Answer 2" name="answer2" value="{{ answer2 if answer2  != None }}"
+               class="form-control"><br>
 
+        <br>
+        <input type="submit" value="Ask" class="btn btn-lg btn-primary btn-block" style="
+             width: 45%;
+             display: inline-block;
+             margin-right: 10px;
+             margin-bottom: 20px;
+             ">
+        <input type="reset" class="btn btn-lg btn-primary btn-block" style="
+             width: 45%;
+             display: inline-block;
+             margin-top: 0px;
+             margin-right: 10px;
+                      margin-bottom: 20px;
 
-
-    <div style=" margin-top: 20px;">
-        <table class="table">
-            <thead>
-
-            <th>Poll</th>
-            <th>Author</th>
-            <th>Date</th>
-
-            </thead>
-
-            {% for poll in polls %}
-            <tr>
-              <td><a href="{{url_for('poll_detail',id=poll['timestamp'])}}" method='get'>{{ poll['question'] }}</a>
-                </td>
-                <td>{{ poll['author'] }}</td>
-                <td>{{ poll['timestamp'] }}</td>
-            </tr>
-            {% endfor %}
-
-        </table>
-    </div>
-
-
-
-
+             ">
+    </form>
 
 </div>
 
