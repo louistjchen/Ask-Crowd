@@ -64,7 +64,9 @@ def register():
             'password': hashed_password,
             'sex': sex,
             'age': age,
-            'occupation': occupation}
+            'occupation': occupation,
+            'polls': [],
+            'votes': []}
     db_write(USERS, item)
 
     # record usernmae in the active session

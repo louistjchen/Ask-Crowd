@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <title>AskCrowd - Profile</title>
+    <title>AskCrowd - Poll</title>
 
 </head>
 
@@ -54,25 +54,23 @@
 
 
     <div style=" margin-top: 20px;">
+        Question: {{ item['question'] }}<br>
+        - created by {{ item['author'] }} on {{ item['timestamp'] }}<br>
+
         <table class="table">
+
             <thead>
 
             <th>Voted?</th>
-            <th>Poll</th>
-            <th>Author</th>
-            <th>Date</th>
-            <th>Category</th>
-            <th>Participation</th>
+            <th>Answers</th>
+            <th>Votes</th>
 
             </thead>
-
-            {% for poll in polls %}
+            {% for i in length %}
             <tr>
-                <td>{{ poll['voted'] }}</td>
-                <td><a href="{{url_for('poll_detail',post=poll['timestamp'])}}" method='get'>{{ poll['question'] }}</a>
-                </td>
-                <td>{{ poll['author'] }}</td>
-                <td>{{ poll['timestamp'] }}</td>
+                <td>{{ item['voted'][i] }}</td>
+                <td><a href="{{url_for('poll_vote',post=item['timestamp'],index=i)}}" method='get'>{{ item['answers'][i] }}</a></td>
+                <td><a href="{{url_for('main')}}" method='get'>{{ item['polls'][i] }}</a></td>
             </tr>
             {% endfor %}
 
