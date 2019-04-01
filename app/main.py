@@ -2,7 +2,7 @@ from flask import render_template, session, request ,send_from_directory
 from app import webapp
 from app.db import *
 from app.macro import *
-import os
+from datetime import *
 
 @webapp.route('/', methods=['GET'])
 @webapp.route('/index', methods=['GET'])
@@ -42,6 +42,10 @@ def main():
                 num_participate_users = num_participate_users + len(vote)
             participation = num_participate_users * 100 / num_users
             polls[i]['participation'] = int(participation)
+
+            ts_epoch = int(polls[i]['timestamp'])
+            ts = datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
+            polls[i]['timestamp_'] = ts
 
         polls = sorted(polls, key=lambda k: k['timestamp'])
         return render_template("profile.html", username=username, ret_msg=ret_msg, hidden=hidden, polls=polls)

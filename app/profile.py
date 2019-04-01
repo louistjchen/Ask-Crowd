@@ -1,6 +1,7 @@
 from flask import render_template, redirect, url_for, request, session
 from app import webapp
 from app.db import *
+from datetime import *
 
 import time
 
@@ -80,6 +81,12 @@ def poll_detail(post):
             item['voted'].append("X")
         else:
             item['voted'].append("")
+        item['voted']
+
+        ts_epoch = int(item['timestamp'])
+        ts = datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
+        item['timestamp_'] = ts
+
         item['polls'][i] = len(poll)
     length = len(item['polls'])
 
