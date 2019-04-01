@@ -16,14 +16,23 @@ def ask():
 
     # to be modified as adaptive answer column
     question = request.form.get('question', "")
+
+    answers = []
+    polls = []
+    empty_list=[]
+
     answer1 = request.form.get('answer1', "")
     answer2 = request.form.get('answer2', "")
+    answers.append(answer1)
+    answers.append(answer2)
+    polls.append(empty_list)
+    polls.append(empty_list)
+    answer_name = 3;
 
-    if question == "" or answer1 == "" or answer2 == "":
-        ret_msg = "Error: All fields are required!"
-        return render_template("ask.html", ret_msg=ret_msg, username=username,
-                               question=question, answer1=answer1, answer2=answer2,
-                               hidden="visible")
+    while request.form.get('answer'+str(answer_name), "")!="":
+        answers.append(request.form.get('answer'+str(answer_name), ""))
+        answer_name +=1
+        polls.append(empty_list)
 
     ts = int(time.time())
     # check if timestamp exists in POLLS
@@ -35,8 +44,8 @@ def ask():
     item = {'timestamp': str(ts),
             'question': question,
             'author': username,
-            'answers': [answer1, answer2],
-            'polls': [[], []]}
+            'answers': answers,
+            'polls': polls}
     db_write(POLLS, item)
 
     # update user's polls

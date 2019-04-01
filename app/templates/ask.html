@@ -46,40 +46,99 @@
 </nav>
 
 <div class="container">
-    <h1 style="color:black;display: inline-block;">Good day, {{ username if username != None }}!</h1>
-
     <form action="{{ url_for('ask') }}" method="post" class="form-signin">
         <div class="alert alert-danger" role="alert"
-             style="visibility: {{ hidden }}">{{ ret_msg if ret_msg != None }}</div>
+             style="visibility: hidden" id="error-message"> </div>
+
         <h1 class="h3 mb-3 font-weight-normal" >Create a new poll</h1>
         <br>
-        <input type="text" placeholder="Question" name="question" value="{{ question if question  != None }}"
+         <h3 class="h4 mb-4 font-weight-normal" >Question</h3>
+        <br>
+
+        <input type="text" placeholder="Question" name="question"
+               class="form-control"><br>
+         <h3 class="h4 mb-4 font-weight-normal" style="display: inline-block" >Options</h3>
+
+<button onclick="remove_options()" class="  btn-primary" type="button" style="
+    float: right;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+">-</button>
+
+        <button onclick="add_options()" class=" btn-primary" type="button" style="
+    float: right;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+        display: inline-block;
+
+">+</button>
+                 <br>
+                 <br>
+
+        <input type="text" placeholder="Answer 1" name="answer1"
+               class="form-control"><br>
+        <input type="text" placeholder="Answer 2" name="answer2"
                class="form-control"><br>
 
-        <input type="text" placeholder="Answer 1" name="answer1" value="{{ answer1 if answer1  != None }}"
-               class="form-control"><br>
-        <input type="text" placeholder="Answer 2" name="answer2" value="{{ answer2 if answer2  != None }}"
-               class="form-control"><br>
+        <div id="more-options"></div>
+
+
 
         <br>
-        <input type="submit" value="Ask" class="btn btn-lg btn-primary btn-block" style="
-             width: 45%;
+        <input type="button" value="Ask" class="btn btn-lg btn-primary btn-block" style="
              display: inline-block;
              margin-right: 10px;
              margin-bottom: 20px;
-             ">
-        <input type="reset" class="btn btn-lg btn-primary btn-block" style="
-             width: 45%;
-             display: inline-block;
-             margin-top: 0px;
-             margin-right: 10px;
-                      margin-bottom: 20px;
+             " onclick="check_values()">
 
-             ">
     </form>
 
 </div>
+    <script>
+        var num = 3
+        function add_options() {
+            if (num == 7){
+                document.getElementById("error-message").innerHTML ="Error: You cannot have more than six options"
+                document.getElementById("error-message").style.visibility="visible"
+                return
+            }
+            var e = document.createElement('div');
+            e.innerHTML = "<input type='text' placeholder='Answer "+num+"' name='answer"+num+"' value='' class='form-control'><br>";
+            document.getElementById("more-options").appendChild(e)
+            num=num+1;
+        }
 
+        function remove_options() {
+            if(num == 3){
+                document.getElementById("error-message").innerHTML ="Error: You must have at least two options"
+                document.getElementById("error-message").style.visibility="visible"
+                return
+            }
+
+            document.getElementById("more-options")
+
+            var options = document.getElementById("more-options")
+            options.removeChild(options.lastChild);
+            num=num-1;
+        }
+
+        function check_values() {
+            for(var i =0; i < document.getElementsByClassName("form-control").length;i++){
+                var item = document.getElementsByClassName("form-control")[i];
+                if(item.value==""){
+                    document.getElementById("error-message").innerHTML ="Error: All fields are required!"
+                    document.getElementById("error-message").style.visibility="visible"
+                    return
+                }
+            }
+            document.getElementById("error-message").style.visibility="hidden"
+            document.getElementsByClassName("form-signin")[0].submit()
+        }
+
+    </script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
