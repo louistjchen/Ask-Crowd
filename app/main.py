@@ -21,7 +21,11 @@ def main():
         key = {'username': username}
         user = db_read(USERS, key)
 
+        users = db_scan(table=USERS, fe=None)
+        num_users = len(users)
+
         for i, poll in enumerate(polls):
+            # retrieve voted
             voted = False
             for vote in user['votes']:
                 if poll['timestamp'] == vote[0]:
@@ -31,6 +35,13 @@ def main():
                 polls[i]['voted'] = "X"
             else:
                 polls[i]['voted'] = ""
+
+            # retrieve participation rate
+            num_participate_users = 0
+            for vote in poll['polls']:
+                num_participate_users = num_participate_users + len(vote)
+            participation = num_participate_users * 100 / num_users
+            polls[i]['participation'] = int(participation)
 
         polls = sorted(polls, key=lambda k: k['timestamp'])
         return render_template("profile.html", username=username, ret_msg=ret_msg, hidden=hidden, polls=polls)
