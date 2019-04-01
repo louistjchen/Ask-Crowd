@@ -35,6 +35,11 @@ def db_scan(table, fe):
         response = db_table.scan()
     return response['Items']
 
+def db_delete(table, key):
+
+    db = db_get()
+    db_table = db.Table(table)
+    db_table.delete_item(Key=key)
 
 # def s3_get():
 #

@@ -74,16 +74,37 @@
         Sex: {{ item['sex'] }}<br>
         Age: {{ item['age'] }}<br>
         Occupation: {{ item['occupation'] }}<br>
-        <br><br>
-        Your polls:<br>
-        {% for poll in item['polls']%}
-        <a href="{{url_for('poll_detail',post=poll)}}">{{ poll }}</a><br>
-        {% endfor %}
-        <br><br>
-        Your votes:<br>
-        {% for vote in item['votes']%}
-        <a href="{{url_for('poll_detail',post=vote[0])}}">{{ vote[0] }}</a><br>
-        {% endfor %}
+        <br>
+
+        <table class="table">
+            <thead>
+                <th>Your Polls</th>
+                <th>Delete</th>
+            </thead>
+            {% for poll in item['polls']%}
+            <tr>
+                <td><a href="{{url_for('poll_detail',post=poll[0])}}">{{ poll[1] }}</a></td>
+                <td>
+                    <form action="{{url_for('delete_poll',post=poll[0])}}" method='post'
+                          onsubmit='return confirm("Are you sure?")'>
+                        <input type='submit' value='Delete' class="btn btn-sm btn-primary btn-block"/>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+        <table class="table">
+            <thead>
+                <th>Your Votes</th>
+            </thead>
+            {% for vote in item['votes']%}
+            <tr>
+                <td><a href="{{url_for('poll_detail',post=vote[0])}}">{{ vote[2] }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 
 

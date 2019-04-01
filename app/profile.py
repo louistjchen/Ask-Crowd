@@ -116,6 +116,17 @@ def account():
     username = session['username']
     key = {'username': username}
     item = db_read(USERS, key)
+
+    for i, it in enumerate(item['polls']):
+        key = {'timestamp': it}
+        poll = db_read(POLLS, key)
+        item['polls'][i] = [it, poll['question']]
+
+    for i, it in enumerate(item['votes']):
+        key = {'timestamp': it[0]}
+        poll = db_read(POLLS, key)
+        item['votes'][i].append(poll['question'])
+
     return render_template("account.html", username=username, ret_msg=ret_msg,
                            item=item, hidden=hidden)
 
@@ -124,3 +135,32 @@ def logout():
     session.pop('username', None)
     session.pop('ret_msg', None)
     return redirect(url_for('main'))
+
+@webapp.route('/delete_poll/<post>', methods=['POST'])
+def delete_poll(post):
+
+    key = {'timestamp': post}
+    poll = db_read(POLLS, key)
+
+    # delete poll from author
+    key = {'username': poll['author']}
+    user = db_read(USERS, key)
+    user['polls'].remove(post)
+    db_write(USERS, user)
+
+    # delete poll from users who have voted
+    for option in poll['polls']:
+        for voter in option:
+            key = {'username': voter}
+            user = db_read(USERS, key)
+            for vote in user['votes']:
+                if vote[0] == post:
+                    user['votes'].remove(vote)
+                    break
+            db_write(USERS, user)
+
+    # delete poll
+    key = {'timestamp': post}
+    db_delete(POLLS, key)
+
+    return redirect(url_for('account'))
