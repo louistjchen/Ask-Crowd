@@ -106,6 +106,18 @@ def poll_vote(post, index):
     session['ret_msg'] = "Success: You have successfully voted \"" + poll['answers'][int(index)] + "\"."
     return redirect(url_for('poll_detail', post=post))
 
+@webapp.route('/account', methods=['GET'])
+def account():
+
+    ret_msg = session['ret_msg'] if 'ret_msg' in session else ""
+    hidden = "hidden" if ret_msg == "" else "visible"
+    session.pop('ret_msg', None)
+
+    username = session['username']
+    key = {'username': username}
+    item = db_read(USERS, key)
+    return render_template("account.html", username=username, ret_msg=ret_msg,
+                           item=item, hidden=hidden)
 
 @webapp.route('/logout', methods=['GET'])
 def logout():

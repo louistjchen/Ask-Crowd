@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <title>AskCrowd - Poll</title>
+    <title>AskCrowd - Account</title>
 
 </head>
 
@@ -55,27 +55,35 @@
 
 
     <div style=" margin-top: 20px;">
-        Question: {{ item['question'] }}<br>
-        - created by {{ item['author'] }} on {{ item['timestamp'] }}<br>
+        Username: {{ item['username'] }}<br>
 
-        <table class="table">
+        <form action="{{ url_for('change_password') }}" method="post" class="form-signin">
+            <input type="password" placeholder="Password" name="password"
+                   value="{{ password if password  != None }}" class="form-control"><br>
+            <input type="password" placeholder="Confirm Password" name="confirm_password"
+                   value="{{ password if password  != None }}" class="form-control"><br>
+            <input type="submit" value="Change Password" class="btn btn-lg btn-primary btn-block" style="
+                 width: 45%;
+                 display: inline-block;
+                 margin-right: 10px;
+                 margin-bottom: 20px;
+                 ">
+        </form><br>
 
-            <thead>
 
-            <th>Voted?</th>
-            <th>Answers</th>
-            <th>Votes</th>
-
-            </thead>
-            {% for i in length %}
-            <tr>
-                <td>{{ item['voted'][i] }}</td>
-                <td><a href="{{url_for('poll_vote',post=item['timestamp'],index=i)}}" method='get'>{{ item['answers'][i] }}</a></td>
-                <td><a href="{{url_for('main')}}" method='get'>{{ item['polls'][i] }}</a></td>
-            </tr>
-            {% endfor %}
-
-        </table>
+        Sex: {{ item['sex'] }}<br>
+        Age: {{ item['age'] }}<br>
+        Occupation: {{ item['occupation'] }}<br>
+        <br><br>
+        Your polls:<br>
+        {% for poll in item['polls']%}
+        <a href="{{url_for('poll_detail',post=poll)}}">{{ poll }}</a><br>
+        {% endfor %}
+        <br><br>
+        Your votes:<br>
+        {% for vote in item['votes']%}
+        <a href="{{url_for('poll_detail',post=vote[0])}}">{{ vote[0] }}</a><br>
+        {% endfor %}
     </div>
 
 

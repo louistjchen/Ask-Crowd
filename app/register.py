@@ -72,3 +72,41 @@ def register():
     # record usernmae in the active session
     session['username'] = username
     return redirect(url_for('main'))
+
+@webapp.route('/change_password', methods=['POST'])
+def change_password():
+
+    username = session['username']
+    password = request.form.get('password', "")
+    confirm_password = request.form.get('confirm_password', "")
+
+    key = {'username': username}
+    item = db_read(USERS, key)
+    session.pop('ret_msg', None)
+
+    # empty input check
+    if password == "" or confirm_password == "":
+        ret_msg = "Error: All fields are required!"
+        return render_template("account.html", ret_msg=ret_msg, username=username, password=password,
+                               confirm_password=confirm_password, item=item, hidden="visible")
+
+    if password != confirm_password:
+        ret_msg = "Error: Passwords are not equal"
+        return render_template("account.html", ret_msg=ret_msg, username=username, password="",
+                               confirm_password="", item=item, hidden="visible")
+
+    for c in password:
+        if c not in password_char:
+            ret_msg = "Error: Password must not contain character: " + c
+            return render_template("account.html", ret_msg=ret_msg, username=username, password="",
+                                   confirm_password="", item=item, hidden="visible")
+
+    salt = generate_salt()
+    hashed_password = generate_password_hash(password + salt)
+
+    item['salt'] = salt
+    item['password'] = hashed_password
+    db_write(USERS, item)
+
+    session['ret_msg'] = "Success: Password has been changed."
+    return redirect(url_for('account'))
