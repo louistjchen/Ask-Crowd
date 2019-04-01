@@ -45,14 +45,14 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container">
-    <h1 style="color:black;display: inline-block;">Good day, {{ username if username != None }}!</h1>
-
-
-    <div style="visibility: {{ hidden }}" class="alert alert-success"
+<div class="container" style="padding-top: 50px !important;">
+ <div style="visibility: {{ hidden }}" class="alert alert-success"
          role="alert">{{ ret_msg if ret_msg != None }}</div>
 
+    <h1 style="color:black;display: inline-block;">Hey, {{ username if username != None }}!</h1>
+    <hr>
 
+        <h1 class="h3 mb-3 font-weight-normal" >All polls</h1>
 
     <div style=" margin-top: 20px;">
         <table class="table">
