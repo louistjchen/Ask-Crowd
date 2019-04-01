@@ -58,4 +58,4 @@ def ask():
     db_write(USERS, item)
 
     session['ret_msg'] = "Success: Poll is created."
-    return redirect(url_for('main'))
+    return redirect(url_for('poll_detail', post=str(ts)))
