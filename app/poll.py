@@ -31,7 +31,8 @@ def poll_detail(post):
         item['voted']
 
         ts_epoch = int(item['timestamp'])
-        ts = datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
+        # ts = datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
+        ts = datetime.fromtimestamp(ts_epoch).strftime('%b %d, %Y')
         item['timestamp_'] = ts
 
         item['polls'][i] = len(poll)

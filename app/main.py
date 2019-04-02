@@ -50,10 +50,21 @@ def main():
             polls[i]['participation'] = int(participation)
 
             ts_epoch = int(polls[i]['timestamp'])
-            ts = datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
+            # ts = datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
+            ts = datetime.fromtimestamp(ts_epoch).strftime('%b %d, %Y')
             polls[i]['timestamp_'] = ts
 
         polls = sorted(polls, key=lambda k: k['timestamp'])
-        return render_template("profile.html", username=username, ret_msg=ret_msg, hidden=hidden, polls=polls)
+
+        voted_polls = []
+        left_polls = []
+        for i in range(len(polls)):
+            if polls[i]['voted'] == "X":
+                voted_polls.append(polls[i])
+            else:
+                left_polls.append(polls[i])
+
+
+        return render_template("profile.html", username=username, ret_msg=ret_msg, hidden=hidden, voted_polls=voted_polls, left_polls=left_polls)
     else:
         return render_template("login.html", username="", password="", ret_msg=ret_msg, hidden=hidden)

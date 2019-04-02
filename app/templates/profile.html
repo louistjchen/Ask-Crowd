@@ -52,13 +52,12 @@
     <h1 style="color:black;display: inline-block;">Hey, {{ username if username != None }}!</h1>
     <hr>
 
-        <h1 class="h3 mb-3 font-weight-normal" >All polls</h1>
+    <h1 class="h3 mb-3 font-weight-normal" >Polls to vote </h1>
 
     <div style=" margin-top: 20px;">
         <table class="table">
             <thead>
 
-            <th>Voted?</th>
             <th>Poll</th>
             <th>Author</th>
             <th>Date</th>
@@ -67,9 +66,37 @@
 
             </thead>
 
-            {% for poll in polls %}
+            {% for poll in left_polls %}
             <tr>
-                <td>{{ poll['voted'] }}</td>
+                <td><a href="{{url_for('poll_detail',post=poll['timestamp'])}}" method='get'>{{ poll['question'] }}</a>
+                </td>
+                <td>{{ poll['author'] }}</td>
+                <td>{{ poll['timestamp_']}}</td>
+
+                <td>{{ poll['category'] if poll['category'] != None }}</td>
+                <td>{{ poll['participation'] }}%</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+    <h1 class="h3 mb-3 font-weight-normal" >Polls voted</h1>
+
+    <div style=" margin-top: 20px;">
+        <table class="table">
+            <thead>
+
+            <th>Poll</th>
+            <th>Author</th>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Participation</th>
+
+            </thead>
+
+            {% for poll in voted_polls %}
+            <tr>
                 <td><a href="{{url_for('poll_detail',post=poll['timestamp'])}}" method='get'>{{ poll['question'] }}</a>
                 </td>
                 <td>{{ poll['author'] }}</td>
