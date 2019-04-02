@@ -75,7 +75,7 @@
                 <td>{{ poll['author'] }}</td>
                 <td>{{ poll['timestamp_']}}</td>
 
-                <td></td>
+                <td>{{ poll['category'] if poll['category'] != None }}</td>
                 <td>{{ poll['participation'] }}%</td>
             </tr>
             {% endfor %}

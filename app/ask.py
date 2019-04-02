@@ -1,6 +1,7 @@
 from flask import render_template, redirect, url_for, request, session
 from app import webapp
 from app.db import *
+from app.classify import *
 from datetime import *
 
 import time
@@ -42,11 +43,15 @@ def ask():
         ts = ts + 1
         key['timestamp'] = str(ts)
 
+    # classify poll
+    category = classify(question)
+
     item = {'timestamp': str(ts),
             'question': question,
             'author': username,
             'answers': answers,
-            'polls': polls}
+            'polls': polls,
+            'category': category}
     db_write(POLLS, item)
 
     # update user's polls

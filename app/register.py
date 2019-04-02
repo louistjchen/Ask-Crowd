@@ -53,7 +53,7 @@ def register():
         years.append(start + i)
 
     # empty input check
-    if username == "" or password == "" or confirm_password == "" or sex == "" or age == "" or occupation == "":
+    if username == "" or password == "" or confirm_password == "" or sex == "" or age == "--Select--" or occupation == "--Select--":
         ret_msg = "Error: All fields are required!"
         return render_template("register.html", ret_msg=ret_msg, username=username, password=password,
                                confirm_password=confirm_password, sex=sex, age=age, occupations=occupations,
