@@ -16,30 +16,46 @@ def analysis(post, index):
     attributes = db_read(USERS, key)['attributes']
 
     for attr in attributes:
-        temp = []
-        temp.append(['name', attr])
+        temp = [['name', attr], [], []]
         data.append(temp)
 
     for user in users:
         key = {'username': user}
         user_info = db_read(USERS, key)
 
-        for i, d in enumerate(data):
+        for d in data:
             vote = None
 
             if d[0][1] in user_info['attributes']:
                 vote = user_info[d[0][1]]
             else:
                 vote = "wish not to disclose"
-            write = False
-            for v in d:
-                if v[0] == vote:
-                    v[1] = str(int(v[1])+1)
-                    write = True
-                    break
 
-            if write == False:
-                data[i].append([vote, '1'])
+            write = False
+            try:
+                index = d[1].find(vote)
+                d[2][index] = d[2][index] + 1
+            except:
+                d[1].append(vote)
+                d[2].append(1)
+
+    #     for i, d in enumerate(data):
+    #         vote = None
+    #
+    #         if d[0][1] in user_info['attributes']:
+    #             vote = user_info[d[0][1]]
+    #         else:
+    #             vote = "wish not to disclose"
+    #         write = False
+    #         for v in d:
+    #             if v[0] == vote:
+    #                 v[1] = str(int(v[1])+1)
+    #                 write = True
+    #                 break
+    #
+    #         if write == False:
+    #             data[i].append([vote, '1'])
+
 
     print(data)
 
