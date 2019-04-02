@@ -21,6 +21,10 @@ def main():
         key = {'username': username}
         user = db_read(USERS, key)
 
+        # prevent username session cache problem
+        if user == None:
+            return render_template("login.html", username="", password="", ret_msg=ret_msg, hidden=hidden)
+
         users = db_scan(table=USERS, fe=None)
         num_users = len(users)
 
