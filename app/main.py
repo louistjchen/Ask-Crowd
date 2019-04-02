@@ -26,7 +26,7 @@ def main():
             return render_template("login.html", username="", password="", ret_msg=ret_msg, hidden=hidden)
 
         users = db_scan(table=USERS, fe=None)
-        num_users = len(users)
+        num_users = len(users)-1
 
         for i, poll in enumerate(polls):
             # retrieve voted
