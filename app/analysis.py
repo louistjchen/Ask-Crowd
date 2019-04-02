@@ -16,7 +16,7 @@ def analysis(post, index):
     attributes = db_read(USERS, key)['attributes']
 
     for attr in attributes:
-        temp = [['name', attr], [], []]
+        temp = [attr, [], []]
         data.append(temp)
 
     for user in users:
@@ -28,8 +28,8 @@ def analysis(post, index):
         for d in data:
             vote = None
 
-            if d[0][1] in user_info['attributes']:
-                vote = user_info[d[0][1]]
+            if d[0] in user_info['attributes']:
+                vote = user_info[d[0]]
             else:
                 vote = "wish not to disclose"
 
@@ -43,7 +43,5 @@ def analysis(post, index):
                 print('except')
                 d[1].append(vote)
                 d[2].append(1)
-
-    print(data)
 
     return render_template("analysis.html", data=data)
