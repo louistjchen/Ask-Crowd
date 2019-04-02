@@ -21,9 +21,11 @@ def poll_detail(post):
         return redirect(url_for('main'))
 
     item['voted'] = []
+    voted = False
     for i, poll in enumerate(item['polls']):
         if username in poll:
             item['voted'].append("X")
+            voted = True
         else:
             item['voted'].append("")
         item['voted']
@@ -35,8 +37,23 @@ def poll_detail(post):
         item['polls'][i] = len(poll)
     length = len(item['polls'])
 
+    suggestions = []
+    category = item['category']
+    if voted:
+        key = {'username': username}
+        user = db_read(USERS, key)
+        votes = []
+        for vote in user['votes']:
+            votes.append(vote[0])
+
+        polls = db_scan(POLLS, None)
+        polls = sorted(polls, key=lambda k: k['timestamp'])
+        for poll in polls:
+            if poll['category'] == category and poll['timestamp'] != post and poll['timestamp'] not in votes:
+                suggestions.append([poll['timestamp'], poll['question']])
+
     return render_template("poll.html", username=username, ret_msg=ret_msg, hidden=hidden,
-                           item=item, length=range(length))
+                           item=item, length=range(length), suggestions=suggestions)
 
 @webapp.route('/poll/<post>/<index>', methods=['GET'])
 def poll_vote(post, index):

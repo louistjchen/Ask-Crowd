@@ -77,10 +77,20 @@
             {% endfor %}
 
         </table>
+
+
+        <table class="table" style="visibility:{{ "hidden" if not suggestions else "visible"}}">
+            <thead>
+                <th>You may also be interested in...</th>
+            </thead>
+            {% for suggestion in suggestions%}
+            <tr>
+                <td><a href="{{url_for('poll_detail',post=suggestion[0])}}">{{ suggestion[1] }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+
     </div>
-
-
-
 
 
 </div>
