@@ -47,17 +47,76 @@
 
 <div class="container">
 
-    <div style="visibility: {{ hidden }}" class="alert alert-success"
-         role="alert">{{ ret_msg if ret_msg != None }}</div>
-
-
-
     <div style=" margin-top: 20px;">
+
 
     </div>
 
+    {% for attribute in data %}
+                   <canvas id="{{attribute[0]}}"></canvas>
+<br>
+<br>
+                  {% endfor %}
+
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+
+
+
+<script>
+
+    {% for attribute in data %}
+    var ctx = document.getElementById("{{attribute[0]}}");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [{% for item in attribute[1] %}
+                    "{{item}}",
+                  {% endfor %}],
+        datasets: [{
+            label:"{{attribute[0].capitalize() }} Analysis",
+            data: [{% for item in attribute[2] %}
+                      "{{item}}",
+                    {% endfor %}],
+            borderColor: [{% for item in attribute[1] %}
+                    '#007bff',
+                    {% endfor %}
+
+            ],
+            borderWidth: 1,
+            fill:false
+        }]
+    },
+    options: {
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: '{{attribute[0]}}'
+                }
+                    }],
+            yAxes: [{
+
+                scaleLabel: {
+                    display: true,
+                    labelString: '# of each {{attribute[0]}}'
+                },
+                ticks: {
+                    beginAtZero:true,
+                    stepSize: 1
+                }
+
+            }]
+        }
+    }
+});
+
+    {% endfor %}
+
+</script>
+
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>

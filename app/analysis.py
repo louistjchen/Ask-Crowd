@@ -23,8 +23,6 @@ def analysis(post, index):
         key = {'username': user}
         user_info = db_read(USERS, key)
 
-        print(data)
-
         for d in data:
             vote = None
 
@@ -35,12 +33,9 @@ def analysis(post, index):
 
             write = False
             try:
-                print('a')
                 index = d[1].index(vote)
-                print('b')
                 d[2][index] = d[2][index] + 1
             except:
-                print('except')
                 d[1].append(vote)
                 d[2].append(1)
 
