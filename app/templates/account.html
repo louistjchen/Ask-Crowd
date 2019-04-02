@@ -45,25 +45,53 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container">
-    <h1 style="color:black;display: inline-block;">Good day, {{ username if username != None }}!</h1>
-
+<div class="container" style="
+    display: inline-block;
+    width: 600px;
+    margin-left: 200px;
+">
 
     <div style="visibility: {{ hidden }}" class="alert alert-success"
          role="alert">{{ ret_msg if ret_msg != None }}</div>
 
+        <h1 class="h3 mb-3 font-weight-normal" >Account Information</h1>
+        <hr>
 
 
     <div style=" margin-top: 20px;">
-        Username: {{ item['username'] }}<br>
 
-        <form action="{{ url_for('change_password') }}" method="post" class="form-signin">
+
+        <table class="table">
+        <thead>
+                <th>Info</th>
+                <th>Content</th>
+            </thead>
+            <tr>
+                <td>Username</td>
+                <td>{{ item['username'] }}</td>
+            </tr>
+            <tr>
+                <td>Sex</td>
+                <td>{{ item['sex'] }}</td>
+            </tr>
+            <tr>
+                <td>Birth Year</td>
+                <td>{{ item['age'] }}</td>
+            </tr>
+            <tr>
+                <td>Occupation</td>
+                <td>{{ item['occupation'] }}</td>
+            </tr>
+        </table>
+
+
+
+        <form action="{{ url_for('change_password') }}" method="post" class="form-signin" style="width: 50%;">
             <input type="password" placeholder="Password" name="password"
                    value="{{ password if password  != None }}" class="form-control"><br>
             <input type="password" placeholder="Confirm Password" name="confirm_password"
                    value="{{ password if password  != None }}" class="form-control"><br>
-            <input type="submit" value="Change Password" class="btn btn-lg btn-primary btn-block" style="
-                 width: 45%;
+            <input type="submit" value="Change Password" class="btn btn-md btn-primary btn-block" style="
                  display: inline-block;
                  margin-right: 10px;
                  margin-bottom: 20px;
@@ -71,10 +99,28 @@
         </form><br>
 
 
-        Sex: {{ item['sex'] }}<br>
-        Birth Year: {{ item['age'] }}<br>
-        Occupation: {{ item['occupation'] }}<br>
+
         <br>
+
+    </div>
+
+
+
+
+
+</div>
+
+<div class="container" style="
+    display: inline-block;
+    width: 600px;
+    margin-right: 200px;
+    position: absolute;
+    margin-left: 100px;
+">
+   <h1 class="h3 mb-3 font-weight-normal" style="
+    padding-top: 25px;
+">Polls</h1>
+        <hr>
 
         <table class="table">
             <thead>
@@ -105,12 +151,6 @@
             </tr>
             {% endfor %}
         </table>
-    </div>
-
-
-
-
-
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
