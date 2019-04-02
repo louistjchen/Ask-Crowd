@@ -14,13 +14,17 @@ mail_settings = {
     "MAIL_PASSWORD": 'ece1778pass'
 }
 
-lambda_url = "127.0.0.1:5000"
+# lambda_url = "http://127.0.0.1:5000"
+lambda_url = "https://sny4ch5mqd.execute-api.us-east-1.amazonaws.com/dev"
 
 webapp.config.update(mail_settings)
 mail = Mail(webapp)
 
 @webapp.route('/poll/<post>', methods=['GET'])
 def poll_detail(post):
+
+    if 'username' not in session:
+        return render_template("login.html", username="", password="", ret_msg="", hidden="hidden")
 
     ret_msg = session['ret_msg'] if 'ret_msg' in session else ""
     hidden = "hidden" if ret_msg == "" else "visible"
@@ -73,14 +77,11 @@ def poll_detail(post):
 @webapp.route('/email/<post>/<email>', methods=['GET'])
 def email(post, email):
 
+    url = lambda_url + "/poll/" + post
     subject = "AskCrowd Poll Invitation"
-    body = """Hello there,\n
-        AskCrowd has sent you an invitation link to complete a suggested poll. Please consider taking a few minutes to complete it!\n"""
-    body = body + "\t\t" + lambda_url + "/poll/" + post
-    body = body + """\n
-        Best regards,
-        AskCrowd Team
-    """
+    body = "Hi there,\n\nAskCrowd has sent you an invitation link to complete a suggested poll. Please consider taking a few minutes to complete it!\n\n"
+    body = body + "\t\t" + url + "\n\n"
+    body = body + "Best regards,\nAskCrowd Team"
 
     try:
         with webapp.app_context():
