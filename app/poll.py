@@ -1,9 +1,21 @@
 from flask import render_template, redirect, url_for, request, session
 from app import webapp
+from flask_mail import Mail, Message
 from app.db import *
 from datetime import *
 
-import time
+# share via email settings
+mail_settings = {
+    "MAIL_SERVER": 'smtp.gmail.com',
+    "MAIL_PORT": 465,
+    "MAIL_USE_TLS": False,
+    "MAIL_USE_SSL": True,
+    "MAIL_USERNAME": 'ece1778moneyjars@gmail.com',
+    "MAIL_PASSWORD": 'ece1778pass'
+}
+
+webapp.config.update(mail_settings)
+mail = Mail(webapp)
 
 @webapp.route('/poll/<post>', methods=['GET'])
 def poll_detail(post):
@@ -55,6 +67,32 @@ def poll_detail(post):
 
     return render_template("poll.html", username=username, ret_msg=ret_msg, hidden=hidden,
                            item=item, length=range(length), suggestions=suggestions)
+
+@webapp.route('/email/<post>/<email>', methods=['GET'])
+def email(post, email):
+
+    subject = "AskCrowd Poll Invitation"
+    body = """
+        Hello there,\n
+        AskCrowd has sent you an invitation link to complete a suggested poll. Please consider taking a few minutes to complete it!\n
+        \t\thttp://127.0.0.1:5000/poll/1554224075\n
+        Best regards,
+        AskCrowd Team
+    """
+
+    try:
+        with webapp.app_context():
+            msg = Message(subject=subject,
+                          sender=webapp.config.get("MAIL_USERNAME"),
+                          recipients=[email],  # replace with your email for testing
+                          body=body)
+            mail.send(msg)
+            session['ret_msg'] = "Success: You have successfully shared this poll to <" + email + ">."
+    except:
+        session['ret_msg'] = "Error: An error has occurred when sharing this poll."
+
+    return redirect(url_for('poll_detail', post=post))
+
 
 @webapp.route('/poll/<post>/<index>', methods=['GET'])
 def poll_vote(post, index):
