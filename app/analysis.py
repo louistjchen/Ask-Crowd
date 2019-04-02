@@ -10,6 +10,7 @@ def analysis(post, index):
     users = []
     for user in poll['polls'][int(index)]:
         users.append(user)
+    answer = poll['answers'][int(index)]
 
     data = []
     key = {'username': 'ATTRIBUTES'}
@@ -39,4 +40,4 @@ def analysis(post, index):
                 d[1].append(vote)
                 d[2].append(1)
 
-    return render_template("analysis.html", data=data)
+    return render_template("analysis.html", poll=poll, answer=answer, data=data)
