@@ -11,7 +11,6 @@ from datetime import *
 def main():
     category_num = request.args.get('category_num')
     search = request.args.get('search')
-    print(search)
     category = None
 
     if category_num:
@@ -67,13 +66,21 @@ def main():
         voted_polls = []
         left_polls = []
         for i in range(len(polls)):
-            if polls[i]['category'] == category or category == "All" or category == None:
-                if polls[i]['voted'] == "X":
-                    voted_polls.append(polls[i])
-                else:
-                    left_polls.append(polls[i])
+            if search == None or searched(polls[i]['question'], search ):
+                if polls[i]['category'] == category or category == "All" or category == None:
+                    if polls[i]['voted'] == "X":
+                        voted_polls.append(polls[i])
+                    else:
+                        left_polls.append(polls[i])
 
 
         return render_template("profile.html", username=username, ret_msg=ret_msg, hidden=hidden, voted_polls=voted_polls, left_polls=left_polls)
     else:
         return render_template("login.html", username="", password="", ret_msg=ret_msg, hidden=hidden)
+
+def searched(question, search):
+    words = question.split(' ')
+    for i in range(len(words)):
+        if search.upper() in words[i].upper():
+                return True
+    return False

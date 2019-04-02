@@ -82,6 +82,20 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+
+
+<div class="input-group">
+      <input type="text" class="form-control" placeholder="Search for..." id="search-input">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" onclick="transfer()">Go!</button>
+      </span>
+    </div><!-- /input-group -->
+
+
+
+
+
+
     <h1 class="h3 mb-3 font-weight-normal" >Polls to vote </h1>
 
     <div style=" margin-top: 20px;">
@@ -145,6 +159,22 @@
 
 
 </div>
+<script>
+    function transfer() {
+        if(window.location.href.includes("search")){
+            window.location.href = window.location.href.split("?")[0]+"?search="+document.getElementById('search-input').value
+            return
+        }
+
+        if(window.location.href.includes("?")){
+            window.location.href =  window.location.href +'&search='+ document.getElementById('search-input').value
+        }else{
+            window.location.href =  window.location.href +'?search='+ document.getElementById('search-input').value
+
+        }
+    }
+
+</script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
