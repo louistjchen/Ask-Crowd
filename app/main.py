@@ -9,6 +9,14 @@ from datetime import *
 @webapp.route('/main', methods=['GET'])
 # Display an HTML page with links
 def main():
+    category_num = request.args.get('category_num')
+    search = request.args.get('search')
+    print(search)
+    category = None
+
+    if category_num:
+        categories = ['All', 'Business & Finance', 'Health Care', 'Science & Health', 'Politics & Policy', 'Criminal Justice']
+        category = categories[int(category_num)]
 
     ret_msg = session['ret_msg'] if 'ret_msg' in session else ""
     session.pop('ret_msg', None)
@@ -59,10 +67,11 @@ def main():
         voted_polls = []
         left_polls = []
         for i in range(len(polls)):
-            if polls[i]['voted'] == "X":
-                voted_polls.append(polls[i])
-            else:
-                left_polls.append(polls[i])
+            if polls[i]['category'] == category or category == "All" or category == None:
+                if polls[i]['voted'] == "X":
+                    voted_polls.append(polls[i])
+                else:
+                    left_polls.append(polls[i])
 
 
         return render_template("profile.html", username=username, ret_msg=ret_msg, hidden=hidden, voted_polls=voted_polls, left_polls=left_polls)
