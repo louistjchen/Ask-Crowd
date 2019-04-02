@@ -10,3 +10,4 @@ from app import register
 from app import profile
 from app import ask
 from app import poll
+from app import analysis

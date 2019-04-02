@@ -31,7 +31,7 @@ def register():
 
     # to be modified
     sex = request.form.get('options', "")
-    age = request.form.get('years', "")
+    dob = request.form.get('dob', "")
     occupation = request.form.get('occupation', "")
 
     session.pop('ret_msg', None)
@@ -53,30 +53,30 @@ def register():
         years.append(start + i)
 
     # empty input check
-    if username == "" or password == "" or confirm_password == "" or sex == "" or age == "--Select--" or occupation == "--Select--":
+    if username == "" or password == "" or confirm_password == "" or sex == "" or dob == "--Select--" or occupation == "--Select--":
         ret_msg = "Error: All fields are required!"
         return render_template("register.html", ret_msg=ret_msg, username=username, password=password,
-                               confirm_password=confirm_password, sex=sex, age=age, occupations=occupations,
-                               hidden="visible", years=years)
+                               confirm_password=confirm_password, sex=sex, dob=dob, years=years, occupations=occupations,
+                               hidden="visible")
 
     if password != confirm_password:
         ret_msg = "Error: Passwords are not equal"
         return render_template("register.html", ret_msg=ret_msg, username=username, password="", confirm_password="",
-                               sex=sex, age=age, occupations=occupations, hidden="visible", years=years)
+                               sex=sex, dob=dob, years=years, occupations=occupations, hidden="visible")
 
     # input string validation
     for c in username:
         if c not in username_char:
             ret_msg = "Error: Username must not contain character: " + c
             return render_template("register.html", ret_msg=ret_msg, username=username, password="",
-                                   confirm_password="", sex=sex, age=age, occupations=occupations,
-                                   hidden="visible", years=years)
+                                   confirm_password="", years=years, occupations=occupations,
+                                   hidden="visible")
     for c in password:
         if c not in password_char:
             ret_msg = "Error: Password must not contain character: " + c
             return render_template("register.html", ret_msg=ret_msg, username=username, password="",
-                                    confirm_password = "", sex = sex, age = age, occupations = occupations,
-                                    hidden = "visible", years=years)
+                                    confirm_password="", years=years, occupations=occupations,
+                                    hidden = "visible")
 
     salt = generate_salt()
     hashed_password = generate_password_hash(password + salt)
@@ -87,17 +87,19 @@ def register():
     if item != None:
         ret_msg = "Error: Username has been used"
         return render_template("register.html", ret_msg=ret_msg, username="", password="",
-                               confirm_password="", sex=sex, age=age, occupations=occupations,
-                               hidden="visible", years=years)
+                               confirm_password="", years=years, occupations=occupations,
+                               hidden="visible")
 
+    attributes = ['dob', 'sex', 'occupation']
     item = {'username': username,
             'salt': salt,
             'password': hashed_password,
-            'sex': sex,
-            'age': age,
-            'occupation': occupation,
             'polls': [],
-            'votes': []}
+            'votes': [],
+            'attributes': attributes,
+            'dob': dob,
+            'sex': sex,
+            'occupation': occupation}
     db_write(USERS, item)
 
     # record usernmae in the active session

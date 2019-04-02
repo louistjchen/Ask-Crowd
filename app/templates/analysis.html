@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <title>AskCrowd - Poll</title>
+    <title>AskCrowd - Analysis</title>
 
 </head>
 
@@ -46,8 +46,6 @@
 </nav>
 
 <div class="container">
-    <h1 style="color:black;display: inline-block;">Good day, {{ username if username != None }}!</h1>
-
 
     <div style="visibility: {{ hidden }}" class="alert alert-success"
          role="alert">{{ ret_msg if ret_msg != None }}</div>
@@ -55,40 +53,6 @@
 
 
     <div style=" margin-top: 20px;">
-        Question: {{ item['question'] }}<br>
-        - created by {{ item['author'] }} on {{ item['timestamp_'] }}<br>
-        - category: {{ item['category'] }}<br>
-
-        <table class="table">
-
-            <thead>
-
-            <th>Voted?</th>
-            <th>Answers (click to vote)</th>
-            <th>Votes (click for analysis)</th>
-
-            </thead>
-            {% for i in length %}
-            <tr>
-                <td>{{ item['voted'][i] }}</td>
-                <td><a href="{{url_for('poll_vote',post=item['timestamp'],index=i)}}" method='get'>{{ item['answers'][i] }}</a></td>
-                <td><a href="{{url_for('analysis',post=item['timestamp'],index=i)}}" method='get'>{{ item['polls'][i] }}</a></td>
-            </tr>
-            {% endfor %}
-
-        </table>
-
-
-        <table class="table" style="visibility:{{ "hidden" if not suggestions else "visible"}}">
-            <thead>
-                <th>You may also be interested in...</th>
-            </thead>
-            {% for suggestion in suggestions%}
-            <tr>
-                <td><a href="{{url_for('poll_detail',post=suggestion[0])}}">{{ suggestion[1] }}</a></td>
-            </tr>
-            {% endfor %}
-        </table>
 
     </div>
 
