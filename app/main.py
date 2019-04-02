@@ -23,6 +23,8 @@ def main():
 
         # prevent username session cache problem
         if user == None:
+            session.pop('username', None)
+            session.pop('ret_msg', None)
             return render_template("login.html", username="", password="", ret_msg=ret_msg, hidden=hidden)
 
         users = db_scan(table=USERS, fe=None)
