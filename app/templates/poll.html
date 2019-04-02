@@ -51,7 +51,14 @@
          role="alert">{{ ret_msg if ret_msg != None }}</div>
 
 
-        <h1 class="h2 mb-2 font-weight-normal" >Question: </h1>
+        <h1 class="h2 mb-2 font-weight-normal" style="
+    display: inline-block;
+" >Question: </h1>
+
+<button onclick="myFunction()" class="btn btn-md btn-primary" style="
+    float: right;
+    margin-top: 20px;
+">Share</button>
         <h1 class="h3 mb-3 font-weight-normal">{{ item['question'] }}</h1>
 
         <div style="float: right; font-style: italic;">By {{ item['author'] }} on {{ item['timestamp_'] }}</div>
@@ -92,6 +99,15 @@
         </table>
 
 </div>
+
+<script>
+function myFunction() {
+  var person = prompt("Please enter your email", "");
+  if (person != null) {
+    window.location.href= window.location.href.split("/poll/")[0]+"/email/"+window.location.href.split("/poll/")[1]+"/"+person
+  }
+}
+</script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>

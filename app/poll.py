@@ -14,6 +14,8 @@ mail_settings = {
     "MAIL_PASSWORD": 'ece1778pass'
 }
 
+lambda_url = "127.0.0.1:5000"
+
 webapp.config.update(mail_settings)
 mail = Mail(webapp)
 
@@ -72,10 +74,10 @@ def poll_detail(post):
 def email(post, email):
 
     subject = "AskCrowd Poll Invitation"
-    body = """
-        Hello there,\n
-        AskCrowd has sent you an invitation link to complete a suggested poll. Please consider taking a few minutes to complete it!\n
-        \t\thttp://127.0.0.1:5000/poll/1554224075\n
+    body = """Hello there,\n
+        AskCrowd has sent you an invitation link to complete a suggested poll. Please consider taking a few minutes to complete it!\n"""
+    body = body + "\t\t" + lambda_url + "/poll/" + post
+    body = body + """\n
         Best regards,
         AskCrowd Team
     """
@@ -89,7 +91,7 @@ def email(post, email):
             mail.send(msg)
             session['ret_msg'] = "Success: You have successfully shared this poll to <" + email + ">."
     except:
-        session['ret_msg'] = "Error: An error has occurred when sharing this poll."
+        session['ret_msg'] = "Error: An error has occurred when sharing this poll. Please validate email."
 
     return redirect(url_for('poll_detail', post=post))
 
