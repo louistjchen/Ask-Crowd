@@ -8,6 +8,20 @@
 
 <link rel="stylesheet" href="https://s3.amazonaws.com/askcrowd/css/profile.css">
 
+<style>
+    .media-position{
+        position:absolute;
+    }
+
+
+    @media screen and (max-width: 1400px) {
+        .media-position{
+                position:relative;
+
+      }
+    }
+
+</style>
 
 <html>
 <head>
@@ -44,11 +58,14 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<div>
 
 <div class="container" style="
+
     display: inline-block;
     width: 600px;
-    margin-left: 200px;
+    margin-left: 100px;
+
 ">
 
     <div style="visibility: {{ hidden }}" class="alert alert-success"
@@ -110,14 +127,17 @@
 
 </div>
 
-<div class="container" style="
+<div
+class="container media-position" style="
+
     display: inline-block;
     width: 600px;
-    margin-right: 200px;
-    position: absolute;
     margin-left: 100px;
+
+
 ">
-   <h1 class="h3 mb-3 font-weight-normal" style="
+
+    <h1 class="h3 mb-3 font-weight-normal" style="
     padding-top: 25px;
 ">Polls</h1>
         <hr>
@@ -151,6 +171,12 @@
             </tr>
             {% endfor %}
         </table>
+
+
+
+</div>
+
+
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

@@ -46,18 +46,19 @@
 </nav>
 
 <div class="container">
-    <h1 style="color:black;display: inline-block;">Good day, {{ username if username != None }}!</h1>
-
 
     <div style="visibility: {{ hidden }}" class="alert alert-success"
          role="alert">{{ ret_msg if ret_msg != None }}</div>
 
 
+        <h1 class="h2 mb-2 font-weight-normal" >Question: </h1>
+        <h1 class="h3 mb-3 font-weight-normal">{{ item['question'] }}</h1>
 
-    <div style=" margin-top: 20px;">
-        Question: {{ item['question'] }}<br>
-        - created by {{ item['author'] }} on {{ item['timestamp_'] }}<br>
-        - category: {{ item['category'] }}<br>
+        <div style="float: right; font-style: italic;">By {{ item['author'] }} on {{ item['timestamp_'] }}</div>
+        <br>
+        <div style="float: right; font-style: italic;">{{ item['category'] }}</div>
+        <br>
+        <hr>
 
         <table class="table">
 
@@ -89,9 +90,6 @@
             </tr>
             {% endfor %}
         </table>
-
-    </div>
-
 
 </div>
 
