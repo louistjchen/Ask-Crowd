@@ -74,12 +74,13 @@ def poll_detail(post):
 
     if item['allow_comment'] == "on":
         comments = retrieve_comments(post)
+        allow_comment_display = "visible"
     else:
         comments = []
-    allow_comment = item['allow_comment']
+        allow_comment_display = "hidden"
 
     return render_template("poll.html", username=username, ret_msg=ret_msg, hidden=hidden,
-                           item=item, length=range(length), suggestions=suggestions, comments=comments, allow_comment=allow_comment)
+                           item=item, length=range(length), suggestions=suggestions, comments=comments, allow_comment_display=allow_comment_display)
 
 @webapp.route('/email/<post>/<email>', methods=['GET'])
 def email(post, email):

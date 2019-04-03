@@ -111,6 +111,8 @@
             {% endfor %}
         </table>
 
+<div style="visibility: {{allow_comment_display}}">
+
         <h1 class="h2 mb-2 font-weight-normal" style="
     display: inline-block;
 " >Comments: </h1>
@@ -144,7 +146,7 @@
       <button type="button" onclick="commentFunction()" class="btn btn-primary">Send Comment</button>
     </form>
 
-
+</div>
 </div>
 
 <script>
