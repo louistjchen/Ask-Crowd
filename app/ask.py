@@ -23,13 +23,17 @@ def ask():
     polls = []
     empty_list=[]
 
+    allow_comment = request.form.get('allow_comment')
+
+
+
     answer1 = request.form.get('answer1', "")
     answer2 = request.form.get('answer2', "")
     answers.append(answer1)
     answers.append(answer2)
     polls.append(empty_list)
     polls.append(empty_list)
-    answer_name = 3;
+    answer_name = 3
 
     while request.form.get('answer'+str(answer_name), "")!="":
         answers.append(request.form.get('answer'+str(answer_name), ""))

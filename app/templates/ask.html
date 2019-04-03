@@ -59,22 +59,31 @@
                class="form-control"><br>
          <h3 class="h4 mb-4 font-weight-normal" style="display: inline-block" >Options</h3>
 
-<button onclick="remove_options()" class="  btn-primary" type="button" style="
+<button onclick="remove_options()" class="  btn-danger" type="button" style="
     float: right;
     border-radius: 50%;
     width: 30px;
     height: 30px;
     display: inline-block;
-">-</button>
+    font-size: 30px;
 
-        <button onclick="add_options()" class=" btn-primary" type="button" style="
+}
+"><div style="
+    margin: -23px;
+">-</div></button>
+
+        <button onclick="add_options()" class=" btn-success" type="button" style="
     float: right;
     border-radius: 50%;
     width: 30px;
     height: 30px;
         display: inline-block;
+            margin-right: 5px;
+font-size: 30px;
 
-">+</button>
+"><div style="
+    margin: -24px;
+">+</div></button>
                  <br>
                  <br>
 
@@ -85,6 +94,12 @@
 
         <div id="more-options"></div>
 
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="allow_comment" name="allow_comment" checked>
+          <label class="form-check-label" for="defaultCheck1">
+            Allow Comments
+          </label>
+        </div>
 
 
         <br>
