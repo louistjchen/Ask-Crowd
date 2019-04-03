@@ -5,6 +5,8 @@
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
 
 <link rel="stylesheet" href="https://s3.amazonaws.com/askcrowd/css/profile.css">
 
@@ -58,7 +60,14 @@
 <button onclick="myFunction()" class="btn btn-md btn-primary" style="
     float: right;
     margin-top: 20px;
-">Share</button>
+"><i class="fas fa-share"></i></button>
+<button onclick="googleFunction('{{ item['question'] }}')" class="btn btn-md btn-primary" style="
+    float: right;
+    margin-top: 20px;
+    margin-right: 5px;
+"><i class="fab fa-google"></i></button>
+
+
         <h1 class="h3 mb-3 font-weight-normal">{{ item['question'] }}</h1>
 
         <div style="float: right; font-style: italic;">By {{ item['author'] }} on {{ item['timestamp_'] }}</div>
@@ -106,6 +115,12 @@ function myFunction() {
   if (person != null) {
     window.location.href= window.location.href.split("/poll/")[0]+"/email/"+window.location.href.split("/poll/")[1]+"/"+person
   }
+}
+
+function googleFunction(value){
+
+    window.open('https://www.google.com/search?q='+value, '_blank');
+
 }
 </script>
 
