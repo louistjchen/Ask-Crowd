@@ -61,13 +61,14 @@
     display: inline-block;
 " >Question: </h1>
 
-<i class="fas fa-envelope" onclick="myFunction()" style="color:#337ab7;font-size: 30px;float: right;margin-top: 18px;"></i>
+<i class="fas fa-envelope" onclick="myFunction()" style="color:#337ab7;font-size: 30px;float: right;margin-top: 18px;cursor: pointer;"></i>
 <img src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png" onclick="googleFunction('{{ item['question'] }}')" style="
     display: inline-block;
     height: 30px;
     float: right;
     margin-right: 10px;
     margin-top: 18px;
+    cursor: pointer;
 ">
 
         <h1 class="h2 mb-2 font-weight-normal">{{ item['question'] }}</h1>
@@ -141,7 +142,7 @@
         <label class="h4 mb-4 font-weight-normal" for="comment">Your Comment</label>
         <textarea name="comment" class="form-control" rows="3" id="comment_area"></textarea>
       </div>
-      <button type="button" onclick="commentFunction()" class="btn btn-primary">Send Comment</button>
+      <button type="button" onclick="commentFunction()" class="btn btn-primary">Comment</button>
     </form>
 
 </div>
