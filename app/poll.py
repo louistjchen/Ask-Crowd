@@ -71,8 +71,10 @@ def poll_detail(post):
             if poll['category'] == category and poll['timestamp'] != post and poll['timestamp'] not in votes:
                 suggestions.append([poll['timestamp'], poll['question']])
 
+    comments = retrieve_comments(post)
+
     return render_template("poll.html", username=username, ret_msg=ret_msg, hidden=hidden,
-                           item=item, length=range(length), suggestions=suggestions)
+                           item=item, length=range(length), suggestions=suggestions, comments=comments)
 
 @webapp.route('/email/<post>/<email>', methods=['GET'])
 def email(post, email):
@@ -155,3 +157,29 @@ def delete_poll(post):
     db_delete(POLLS, key)
 
     return redirect(url_for('account'))
+
+@webapp.route('/comment_poll/<post>/<comment>', methods=['GET'])
+def comment_poll(post, comment):
+
+    username = session['username']
+    key = {'timestamp': post}
+    comments = db_read(COMMENTS, key)
+
+    if comments == None:
+        comments = {'timestamp': post,
+                   'comments': []}
+
+    ts = int(time.time())
+    comment_item = {'username': username,
+                    'comment': comment,
+                    'timestamp': ts}
+    comments['comments'].append(comment_item)
+    return redirect(url_for('poll_detail', post=post))
+
+def retrieve_comments(post):
+
+    key = {'timestamp': post}
+    comments = db_read(COMMENTS, key)
+    if comments == None:
+        comments = []
+    return comments
