@@ -23,9 +23,7 @@ def ask():
     polls = []
     empty_list=[]
 
-    allow_comment = request.form.get('allow_comment')
-
-
+    allow_comment = request.form.get('allow_comment', 'off')
 
     answer1 = request.form.get('answer1', "")
     answer2 = request.form.get('answer2', "")
@@ -55,7 +53,8 @@ def ask():
             'author': username,
             'answers': answers,
             'polls': polls,
-            'category': category}
+            'category': category,
+            'allow_comment': allow_comment}
     db_write(POLLS, item)
 
     # update user's polls
