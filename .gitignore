@@ -2,5 +2,5 @@
 .idea/*
 venv/*
 app/__pycache__/*
-app/*.pyc__
+app/*.pyc
 app/.DS_Store
