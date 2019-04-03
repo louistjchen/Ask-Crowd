@@ -77,6 +77,9 @@
         <br>
         <div style="float: right; font-style: italic;">{{ item['category'] }}</div>
         <br>
+
+        <p>{{ item['description'] }}</p>
+
         <hr>
 
         <table class="table">
@@ -122,9 +125,6 @@
 
                           <div class="media">
                            <p class="pull-right"><small>{{comment['timestamp_']}}</small></p>
-                           <!-- <a class="media-left" href="#">
-                              <img src="http://lorempixel.com/40/40/people/1/">
-                            </a>-->
                             <div class="media-body">
 
                               <h4 class="media-heading user_name">{{comment['username']}}</h4>

@@ -18,6 +18,7 @@ def ask():
 
     # to be modified as adaptive answer column
     question = request.form.get('question', "")
+    description = request.form.get('description', "")
 
     answers = []
     polls = []
@@ -55,6 +56,8 @@ def ask():
             'polls': polls,
             'category': category,
             'allow_comment': allow_comment}
+    if description:
+        item['description'] = description
     db_write(POLLS, item)
 
     # update user's polls

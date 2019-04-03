@@ -57,6 +57,9 @@
 
         <input type="text" placeholder="Question" name="question"
                class="form-control"><br>
+        <textarea name="description" class="form-control" rows="3"
+                  id="description" placeholder="Description (optional)"></textarea><br>
+
          <h3 class="h4 mb-4 font-weight-normal" style="display: inline-block" >Options</h3>
 
 <button onclick="remove_options()" class="  btn-danger" type="button" style="
@@ -141,9 +144,9 @@ font-size: 30px;
         }
 
         function check_values() {
-            for(var i =0; i < document.getElementsByClassName("form-control").length;i++){
+            for(var i = 0; i < document.getElementsByClassName("form-control").length; i++){
                 var item = document.getElementsByClassName("form-control")[i];
-                if(item.value==""){
+                if(item.name != "description" && item.value == ""){
                     document.getElementById("error-message").innerHTML ="Error: All fields are required!"
                     document.getElementById("error-message").style.visibility="visible"
                     return
