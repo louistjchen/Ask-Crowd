@@ -61,16 +61,14 @@
     display: inline-block;
 " >Question: </h1>
 
-<button onclick="myFunction()" class="btn btn-md btn-primary" style="
+<i class="fas fa-envelope" onclick="myFunction()" style="color:#337ab7;font-size: 30px;float: right;margin-top: 18px;"></i>
+<img src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png" onclick="googleFunction('{{ item['question'] }}')" style="
+    display: inline-block;
+    height: 30px;
     float: right;
-    margin-top: 20px;
-"><i class="fas fa-share"></i></button>
-<button onclick="googleFunction('{{ item['question'] }}')" class="btn btn-md btn-primary" style="
-    float: right;
-    margin-top: 20px;
-    margin-right: 5px;
-"><i class="fab fa-google"></i></button>
-
+    margin-right: 10px;
+    margin-top: 18px;
+">
 
         <h1 class="h2 mb-2 font-weight-normal">{{ item['question'] }}</h1>
 
@@ -159,7 +157,7 @@ function commentFunction() {
 }
 
 function myFunction() {
-  var email = prompt("Please enter your email", "");
+  var email = prompt("Please enter email address you wish to share this poll to.", "");
   if (email != null) {
     window.location.href= window.location.href.split("/poll/")[0]+"/email/"+window.location.href.split("/poll/")[1]+"/"+email
   }
