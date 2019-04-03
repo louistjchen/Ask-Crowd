@@ -11,9 +11,7 @@
 <style>
 .ahref{
 
-    color: white !important;
     margin-right: 4px;
-    text-decoration: underline;
 
 }
 </style>
@@ -67,19 +65,17 @@
 <br>
 
     <nav class="navbar navbar-default">
-  <div class="container-fluid" style="
-    background: #337ab7;
-">
+  <div class="container-fluid">
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-left">
-    <li>    <a href="{{url_for('main',category_num="0")}}" class="ahref">All</a></li>
-    <li>    <a href="{{url_for('main',category_num="1")}}" class="ahref">Business & Finance</a></li>
-<li><a href="{{url_for('main',category_num="2")}}" class="ahref">Health Care</a></li>
-<li><a href="{{url_for('main',category_num="3")}}"  class="ahref">Science & Health</a></li>
-<li><a href="{{url_for('main',category_num="4")}}"  class="ahref">Politics & Policy</a></li>
-<li><a href="{{url_for('main',category_num="5")}}"  class="ahref">Criminal Justice</a></li>
+    <li><a href="{{url_for('main',category_num="0")}}" class="ahref" style="font-weight: {{ 'bold' if category_num == 0 else 'normal' }}">All</a></li>
+    <li><a href="{{url_for('main',category_num="1")}}" class="ahref" style="font-weight: {{ 'bold' if category_num == 1 else 'normal' }}">Business & Finance</a></li>
+    <li><a href="{{url_for('main',category_num="2")}}" class="ahref" style="font-weight: {{ 'bold' if category_num == 2 else 'normal' }}">Health Care</a></li>
+    <li><a href="{{url_for('main',category_num="3")}}"  class="ahref" style="font-weight: {{ 'bold' if category_num == 3 else 'normal' }}">Science & Health</a></li>
+    <li><a href="{{url_for('main',category_num="4")}}"  class="ahref" style="font-weight: {{ 'bold' if category_num == 4 else 'normal' }}">Politics & Policy</a></li>
+    <li><a href="{{url_for('main',category_num="5")}}"  class="ahref" style="font-weight: {{ 'bold' if category_num == 5 else 'normal' }}">Criminal Justice</a></li>
 
       </ul>
     </div><!-- /.navbar-collapse -->

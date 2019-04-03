@@ -11,11 +11,13 @@ from datetime import *
 def main():
     category_num = request.args.get('category_num')
     search = request.args.get('search')
-    category = None
 
-    if category_num:
-        categories = ['All', 'Business & Finance', 'Health Care', 'Science & Health', 'Politics & Policy', 'Criminal Justice']
-        category = categories[int(category_num)]
+    if not category_num:
+        category_num = 0
+
+    categories = ['All', 'Business & Finance', 'Health Care', 'Science & Health', 'Politics & Policy', 'Criminal Justice']
+    category = categories[int(category_num)]
+
 
     ret_msg = session['ret_msg'] if 'ret_msg' in session else ""
     session.pop('ret_msg', None)
@@ -74,7 +76,7 @@ def main():
                         left_polls.append(polls[i])
 
 
-        return render_template("profile.html", username=username, ret_msg=ret_msg, hidden=hidden, voted_polls=voted_polls, left_polls=left_polls)
+        return render_template("profile.html", username=username, ret_msg=ret_msg, hidden=hidden, voted_polls=voted_polls, left_polls=left_polls, category_num = int(category_num))
     else:
         return render_template("login.html", username="", password="", ret_msg=ret_msg, hidden=hidden)
 

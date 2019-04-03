@@ -190,6 +190,6 @@ def retrieve_comments(post):
             ts_epoch = int(comment['timestamp'])
             ts = datetime.fromtimestamp(ts_epoch).strftime('%H:%M:%S on %b %d, %Y')
             comment['timestamp_'] = ts
-        comments = sorted(comments, key=lambda k: k['timestamp'])
+        # comments = sorted(comments, key=lambda k: k['timestamp'])
 
     return comments
