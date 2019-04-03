@@ -3,6 +3,7 @@ from app import webapp
 from flask_mail import Mail, Message
 from app.db import *
 from datetime import *
+import time
 
 # share via email settings
 mail_settings = {
@@ -174,6 +175,7 @@ def comment_poll(post, comment):
                     'comment': comment,
                     'timestamp': ts}
     comments['comments'].append(comment_item)
+    db_write(COMMENTS, comments)
     return redirect(url_for('poll_detail', post=post))
 
 def retrieve_comments(post):
@@ -182,4 +184,12 @@ def retrieve_comments(post):
     comments = db_read(COMMENTS, key)
     if comments == None:
         comments = []
+    else:
+        comments  =   comments['comments']
+        for comment in comments:
+            ts_epoch = int(comment['timestamp'])
+            # ts = datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
+            ts = datetime.fromtimestamp(ts_epoch).strftime('%b %d, %Y')
+            comment['timestamp_'] = ts
+
     return comments

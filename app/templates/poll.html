@@ -68,7 +68,7 @@
 "><i class="fab fa-google"></i></button>
 
 
-        <h1 class="h3 mb-3 font-weight-normal">{{ item['question'] }}</h1>
+        <h1 class="h2 mb-2 font-weight-normal">{{ item['question'] }}</h1>
 
         <div style="float: right; font-style: italic;">By {{ item['author'] }} on {{ item['timestamp_'] }}</div>
         <br>
@@ -106,6 +106,34 @@
             </tr>
             {% endfor %}
         </table>
+
+        <h1 class="h2 mb-2 font-weight-normal" style="
+    display: inline-block;
+" >Comments: </h1>
+
+                          <hr>
+
+            {% for comment in comments%}
+
+                          <div class="media">
+                           <p class="pull-right"><small>{{comment['timestamp_']}}</small></p>
+                           <!-- <a class="media-left" href="#">
+                              <img src="http://lorempixel.com/40/40/people/1/">
+                            </a>-->
+                            <div class="media-body">
+
+                              <h4 class="media-heading user_name">{{comment['username']}}</h4>
+                              {{comment['comment']}}
+
+                              <!--<p><small><a href="">Like</a> - <a href="">Share</a></small></p>-->
+                            </div>
+                          </div>
+                          <hr>
+
+            {% endfor %}
+
+
+            
 
 </div>
 
