@@ -132,16 +132,30 @@
 
             {% endfor %}
 
+    <form>
+      <div class="form-group">
+        <label class="h4 mb-4 font-weight-normal" for="comment">Your Comment</label>
+        <textarea name="comment" class="form-control" rows="3" id="comment_area"></textarea>
+      </div>
+      <button type="button" onclick="commentFunction()" class="btn btn-primary">Send Comment</button>
+    </form>
 
-            
 
 </div>
 
 <script>
+
+function commentFunction() {
+    var value = document.getElementById("comment_area").value
+
+    window.location.href= window.location.href.split("/poll/")[0]+"/comment_poll/"+window.location.href.split("/poll/")[1]+"/"+value
+
+}
+
 function myFunction() {
-  var person = prompt("Please enter your email", "");
-  if (person != null) {
-    window.location.href= window.location.href.split("/poll/")[0]+"/email/"+window.location.href.split("/poll/")[1]+"/"+person
+  var email = prompt("Please enter your email", "");
+  if (email != null) {
+    window.location.href= window.location.href.split("/poll/")[0]+"/email/"+window.location.href.split("/poll/")[1]+"/"+email
   }
 }
 
