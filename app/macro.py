@@ -3,6 +3,7 @@ s3_bucket = 'askcrowd'
 
 USERS = 'askcrowd-users'
 POLLS = 'askcrowd-polls'
+COMMENTS = 'askcrowd-comments'
 
 username_char = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 password_char = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@#$%^&*_.?'
