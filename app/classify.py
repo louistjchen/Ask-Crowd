@@ -18,10 +18,10 @@ categories = []
 
 # retrieve training articles
 s3 = boto3.resource('s3')
-obj = s3.Object('askcrowd', 'titles.txt')
+obj = s3.Object('askcrowd', 'classify/titles.txt')
 body = obj.get()['Body'].read().decode()
 titles = body.split('\n')[:-1]
-obj = s3.Object('askcrowd', 'categories.txt')
+obj = s3.Object('askcrowd', 'classify/categories.txt')
 body = obj.get()['Body'].read().decode()
 categories = body.split('\n')[:-1]
 

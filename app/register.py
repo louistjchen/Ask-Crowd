@@ -5,6 +5,15 @@ from app.db import *
 import os
 import time
 import datetime
+
+def get_image_extension(name):
+    ret = ""
+    for c in reversed(name):
+        ret = c + ret
+        if c == '.':
+            return ret
+    return ""
+
 @webapp.route('/register', methods=['GET'])
 def register_form():
     start = 1900
@@ -98,11 +107,21 @@ def register():
     file = request.files['profile_image']
 
     if file.filename == '':
-        ret_msg = "Error: Filename is empty "
-        return render_template("register.html", ret_msg=ret_msg,hidden="visible")
+        ret_msg = "Error: Filename is empty"
+        return render_template("register.html", ret_msg=ret_msg, username=username, password="",
+                               confirm_password="", years=years, occupations=occupations,
+                               hidden="visible")
+
+    ext = get_image_extension(file.filename)
+    if ext == '':
+        ret_msg = "Error: Filename does not have extension"
+        return render_template("register.html", ret_msg=ret_msg, username=username, password="",
+                               confirm_password="", years=years, occupations=occupations,
+                               hidden="visible")
 
     ts = time.time()
-    file.filename = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d_%H%M%S')+ file.filename
+    # file.filename = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d_%H%M%S') + file.filename
+    file.filename = 'profile_image/' + username + ext
 
     image_src = upload_file_to_s3(file)
 
