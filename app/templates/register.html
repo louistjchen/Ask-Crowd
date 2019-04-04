@@ -42,7 +42,7 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<form action="{{ url_for('register') }}" method="post" class="form-signin" style="margin-top:50px;padding: 40px; max-width: 600px">
+<form action="{{ url_for('register') }}" method="post" class="form-signin"  enctype="multipart/form-data" style="margin-top:50px;margin-bottom:50px;padding: 40px; max-width: 600px">
     <div class="alert alert-danger" role="alert"
          style="visibility: {{ hidden }}">{{ ret_msg if ret_msg != None }}</div>
     <h1 class="h3 mb-3 font-weight-normal" >Create a new account</h1>
@@ -57,6 +57,14 @@
            class="form-control"><br>
     <input type="password" placeholder="Confirm Password" name="confirm_password"
            value="{{ password if password  != None }}" class="form-control"><br>
+
+<label style="float: left" >Profile Image</label>
+        <br>
+        <br>
+        <input id="src" type="file" name="profile_image"  accept="image/*" style="display: block;">
+
+        <img style="object-fit: cover;display: block;" id="target"/> <!-- image you want to display it (target) -->
+<br>
 
 <label style="float: left" >Sex</label>
 <br>
@@ -102,6 +110,39 @@
     <span style="color:black">Registered?</span><a href="{{ url_for('main') }}"> Login</a>
 
 </form>
+
+<script>
+
+function showImage(src,target) {
+  var fr=new FileReader();
+  // when image is loaded, set the src of the image where you want to display it
+  fr.onload = function(e) {
+        if(this.result){
+            target.src = this.result;
+        target.style.width="200px"
+        target.style.height="200px"
+        }else{
+             target.style.width="0px"
+            target.style.height="0px"
+        }
+
+  };
+  src.addEventListener("change",function() {
+    // fill fr with image data
+    if (src.files[0]){
+        fr.readAsDataURL(src.files[0]);
+    }else{
+         target.style.width="0px"
+            target.style.height="0px"
+    }
+  });
+}
+
+var src = document.getElementById("src");
+var target = document.getElementById("target");
+showImage(src,target);
+
+</script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

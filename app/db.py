@@ -41,26 +41,45 @@ def db_delete(table, key):
     db_table = db.Table(table)
     db_table.delete_item(Key=key)
 
-# def s3_get():
-#
-#     s3 = boto3.client("s3")
-#     return s3
-#
-# def s3_write(upload, filename):
-#
-#     s3 = s3_get()
-#     s3.upload_file(upload, s3_bucket, filename)
-#
-# def s3_read(filename):
-#
-#     s3 = s3_get()
-#     url = s3.generate_presigned_url('get_object',
-#                               Params={
-#                                   'Bucket': s3_bucket,
-#                                   'Key': filename,
-#                               },
-#                               ExpiresIn=3600)
-#     return url
+def s3_get():
+
+    s3 = boto3.client("s3")
+    return s3
+
+def upload_file_to_s3(file, bucket_name=s3_bucket, acl="public-read"):
+
+    """
+    Docs: http://boto3.readthedocs.io/en/latest/guide/s3.html
+    """
+
+    s3 = s3_get()
+    s3.upload_fileobj(
+        file,
+        bucket_name,
+        file.filename,
+        ExtraArgs={
+            "ACL": acl,
+            "ContentType": file.content_type
+        }
+    )
+
+    return "https://s3.amazonaws.com/"+s3_bucket+"/"+file.filename
+
+def s3_write(upload, filename):
+
+    s3 = s3_get()
+    s3.upload_file(upload, s3_bucket, filename)
+
+def s3_read(filename):
+
+    s3 = s3_get()
+    url = s3.generate_presigned_url('get_object',
+                              Params={
+                                  'Bucket': s3_bucket,
+                                  'Key': filename,
+                              },
+                              ExpiresIn=3600)
+    return url
 
 def generate_salt():
     chars = []

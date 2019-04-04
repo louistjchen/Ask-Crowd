@@ -176,10 +176,15 @@ def comment_poll(post, comment):
         comments = {'timestamp': post,
                    'comments': []}
 
+    key = {'username': username}
+    user = db_read(USERS, key)
+    profile_image = user['profile_image']
+
     ts = int(time.time())
     comment_item = {'username': username,
                     'comment': comment,
-                    'timestamp': ts}
+                    'timestamp': ts,
+                    'profile_image':profile_image}
     comments['comments'].append(comment_item)
     db_write(COMMENTS, comments)
     return redirect(url_for('poll_detail', post=post))

@@ -2,7 +2,9 @@ from flask import render_template, redirect, url_for, request, session
 from werkzeug.security import generate_password_hash
 from app import webapp
 from app.db import *
-
+import os
+import time
+import datetime
 @webapp.route('/register', methods=['GET'])
 def register_form():
     start = 1900
@@ -90,6 +92,20 @@ def register():
                                confirm_password="", years=years, occupations=occupations,
                                hidden="visible")
 
+    if 'profile_image' not in request.files:
+        ret_msg = "Error: File is empty "
+        return render_template("register.html", ret_msg=ret_msg,hidden="visible")
+    file = request.files['profile_image']
+
+    if file.filename == '':
+        ret_msg = "Error: Filename is empty "
+        return render_template("register.html", ret_msg=ret_msg,hidden="visible")
+
+    ts = time.time()
+    file.filename = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d_%H%M%S')+ file.filename
+
+    image_src = upload_file_to_s3(file)
+
     attributes = ['dob', 'sex', 'occupation']
     item = {'username': username,
             'salt': salt,
@@ -99,7 +115,8 @@ def register():
             'attributes': attributes,
             'dob': dob,
             'sex': sex,
-            'occupation': occupation}
+            'occupation': occupation,
+            'profile_image':image_src}
     db_write(USERS, item)
 
     # record usernmae in the active session

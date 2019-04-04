@@ -125,6 +125,9 @@
 
                           <div class="media">
                            <p class="pull-right"><small>{{comment['timestamp_']}}</small></p>
+                           <a class="media-left">
+                           <img style="width: 50px;height: 50px; object-fit: cover" src="{{comment['profile_image']}}">
+</a>
                             <div class="media-body">
 
                               <h4 class="media-heading user_name">{{comment['username']}}</h4>
@@ -152,9 +155,9 @@
 
 function commentFunction() {
     var value = document.getElementById("comment_area").value
-
-    window.location.href= window.location.href.split("/poll/")[0]+"/comment_poll/"+window.location.href.split("/poll/")[1]+"/"+value
-
+    if (value) {
+        window.location.href= window.location.href.split("/poll/")[0]+"/comment_poll/"+window.location.href.split("/poll/")[1]+"/"+value
+    }
 }
 
 function myFunction() {
