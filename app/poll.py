@@ -16,7 +16,7 @@ mail_settings = {
 }
 
 # lambda_url = "http://127.0.0.1:5000"
-lambda_url = "https://sny4ch5mqd.execute-api.us-east-1.amazonaws.com/dev"
+lambda_url = "https://4sqplsg6yi.execute-api.us-east-1.amazonaws.com/dev"
 
 webapp.config.update(mail_settings)
 mail = Mail(webapp)
