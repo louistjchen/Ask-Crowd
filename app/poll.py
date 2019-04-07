@@ -5,6 +5,9 @@ from app.db import *
 from datetime import *
 import time
 
+import boto3
+from botocore.exceptions import ClientError
+
 key = {'name': 'email'}
 email_info = db_read(INFO, key)
 
@@ -87,23 +90,86 @@ def poll_detail(post):
 
 @webapp.route('/email/<post>/<email>', methods=['GET'])
 def email(post, email):
+    URL = lambda_url + "/poll/" + post
 
-    url = lambda_url + "/poll/" + post
-    subject = "AskCrowd Poll Invitation"
-    body = "Hi there,\n\nAskCrowd has sent you an invitation link to complete a suggested poll. Please consider taking a few minutes to complete it!\n\n"
-    body = body + "\t\t" + url + "\n\n"
-    body = body + "Best regards,\nAskCrowd Team"
+    BODY_HTML ='''
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+        <html>
+        <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+          <meta http-equiv="Content-Style-Type" content="text/css">
+          <title></title>
+          <meta name="Generator" content="Cocoa HTML Writer">
+          <meta name="CocoaVersion" content="1561.6">
+          <style type="text/css">
+            p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; line-height: 56.0px; font: 48.0px Menlo; color: #000000; -webkit-text-stroke: #000000; background-color: #ffffff; min-height: 56.0px}
+            p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; line-height: 56.0px; font: 48.0px Menlo; color: #000000; -webkit-text-stroke: #000000; background-color: #ffffff}
+            p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; line-height: 14.0px; font: 12.0px Menlo; color: #000000; -webkit-text-stroke: #000000}
+            p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; line-height: 16.0px; font: 14.0px Menlo; color: #000000; -webkit-text-stroke: #000000; background-color: #ffffff}
+            p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; line-height: 16.0px; font: 14.0px Menlo; color: #0433ff; -webkit-text-stroke: #0433ff; background-color: #ffffff}
+            span.s1 {font-kerning: none}
+          </style>
+        </head>
+        <body>
+        <p class="p1"><span class="s1"><b></b></span><br></p>
+        <p class="p1"><span class="s1"><b></b></span><br></p>
+        <p class="p1"><span class="s1"><b></b></span><br></p>
+        <p class="p2"><span class="s1"><b>AskCrowd</b></span></p>
+        <p class="p3"><span class="s1"><br>
+        </span></p>
+        <p class="p4"><span class="s1">Hi there, AskCrowd has sent you an invitation link to complete a suggested poll.<span class="Apple-converted-space"> </span></span></p>
+        <p class="p4"><span class="s1">Please consider taking a few minutes to complete it!</span></p>
+        <p class="p3"><span class="s1"><br>
+        </span></p>
+        <p class="p5"><span class="s1">
+        '''+URL+'''
+        </span></p>
+        <p class="p3"><span class="s1"><br>
+        </span></p>
+        <p class="p4"><span class="s1">Best regards</span></p>
+        <p class="p4"><span class="s1">AskCrowd Team</span></p>
+        </body>
+        </html>
+
+        
+    '''
+    SENDER = "ece1778moneyjars@gmail.com"
+
+    RECIPIENT = email
+
+    AWS_REGION = "us-east-1"
+
+    SUBJECT = "AskCrowd Poll Invitation"
+
+    CHARSET = "UTF-8"
+
+    client = boto3.client('ses', region_name=AWS_REGION)
 
     try:
-        with webapp.app_context():
-            msg = Message(subject=subject,
-                          sender=webapp.config.get("MAIL_USERNAME"),
-                          recipients=[email],  # replace with your email for testing
-                          body=body)
-            mail.send(msg)
-            session['ret_msg'] = "Success: You have successfully shared this poll to <" + email + ">."
-    except:
-        session['ret_msg'] = "Error: An error has occurred when sharing this poll. Please validate email."
+        response = client.send_email(
+            Destination={
+                'ToAddresses': [
+                    RECIPIENT,
+                ],
+            },
+            Message={
+                'Body': {
+                    'Html': {
+                        'Charset': CHARSET,
+                        'Data': BODY_HTML,
+                    }
+                },
+                'Subject': {
+                    'Charset': CHARSET,
+                    'Data': SUBJECT,
+                },
+            },
+            Source=SENDER
+        )
+    except ClientError as e:
+        session['ret_msg'] = e.response['Error']['Message']
+    else:
+        session['ret_msg'] = "Success: You have successfully shared this poll to <" + email + ">."
 
     return redirect(url_for('poll_detail', post=post))
 
