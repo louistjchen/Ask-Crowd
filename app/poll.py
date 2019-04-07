@@ -1,6 +1,5 @@
 from flask import render_template, redirect, url_for, request, session
 from app import webapp
-from flask_mail import Mail, Message
 from app.db import *
 from datetime import *
 import time
@@ -10,22 +9,8 @@ from botocore.exceptions import ClientError
 
 key = {'name': 'email'}
 email_info = db_read(INFO, key)
-
-# share via email settings
-mail_settings = {
-    "MAIL_SERVER": 'smtp.gmail.com',
-    "MAIL_PORT": 465,
-    "MAIL_USE_TLS": False,
-    "MAIL_USE_SSL": True,
-    "MAIL_USERNAME": email_info['username'],
-    "MAIL_PASSWORD": email_info['password']
-}
-
-# lambda_url = "http://127.0.0.1:5000"
+sender_email = email_info['sender_email']
 lambda_url = email_info['lambda_url']
-
-webapp.config.update(mail_settings)
-mail = Mail(webapp)
 
 @webapp.route('/poll/<post>', methods=['GET'])
 def poll_detail(post):
@@ -133,7 +118,7 @@ def email(post, email):
 
         
     '''
-    SENDER = "ece1778moneyjars@gmail.com"
+    SENDER = sender_email
 
     RECIPIENT = email
 
