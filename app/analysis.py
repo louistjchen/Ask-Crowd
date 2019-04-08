@@ -5,6 +5,7 @@ from app.db import *
 @webapp.route('/analysis/<post>/<index>', methods=['GET'])
 def analysis(post, index):
 
+    username = session['username']
     key = {'timestamp': post}
     poll = db_read(POLLS, key)
     users = []
@@ -40,4 +41,4 @@ def analysis(post, index):
                 d[1].append(vote)
                 d[2].append(1)
 
-    return render_template("analysis.html", poll=poll, answer=answer, data=data)
+    return render_template("analysis.html", poll=poll, answer=answer, data=data, username=username)

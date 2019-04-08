@@ -7,10 +7,6 @@ import time
 import boto3
 from botocore.exceptions import ClientError
 
-key = {'name': 'email'}
-email_info = db_read(INFO, key)
-sender_email = email_info['sender_email']
-lambda_url = email_info['lambda_url']
 
 @webapp.route('/poll/<post>', methods=['GET'])
 def poll_detail(post):
@@ -75,6 +71,11 @@ def poll_detail(post):
 
 @webapp.route('/email/<post>/<email>', methods=['GET'])
 def email(post, email):
+    key = {'name': 'email'}
+    email_info = db_read(INFO, key)
+    sender_email = email_info['sender_email']
+    lambda_url = email_info['lambda_url']
+
     URL = lambda_url + "/poll/" + post
 
     BODY_HTML ='''
