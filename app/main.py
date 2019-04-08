@@ -81,8 +81,16 @@ def main():
         return render_template("login.html", username="", password="", ret_msg=ret_msg, hidden=hidden)
 
 def searched(question, search):
-    words = question.split(' ')
+    num_of_finds = 0
+
+    words = question.split('?')[0].split(' ')
+    search_keywords = search.split(' ')
+    threshold = len(search_keywords)/2 if len(search_keywords) >=3 else len(search_keywords)
+
     for i in range(len(words)):
-        if search.upper() in words[i].upper():
-                return True
+        for j in range(len(search_keywords)):
+            if search_keywords[j].upper() == words[i].upper():
+                num_of_finds+=1
+                if num_of_finds >= threshold:
+                    return True
     return False
